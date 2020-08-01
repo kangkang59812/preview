@@ -1,10 +1,6 @@
 # mysql执行计划
 
-​       在企业的应用场景中，为了知道优化SQL语句的执行，需要查看SQL语句的具体执行过程，以加快SQL语句的执行效率。
-
-​       可以使用explain+SQL语句来模拟优化器执行SQL查询语句，从而知道mysql是如何处理sql语句的。
-
-​	   官网地址： https://dev.mysql.com/doc/refman/5.5/en/explain-output.html 
+max_connections是MySQL最大并发连接数，默认值是151
 
 #### 1、执行计划中包含的信息
 
@@ -377,3 +373,14 @@ create index idx_test03_c1234 on test03(c1,c2,c3,c4);
 
    
 
+#### 事务
+
+并发控制的单位
+
+https://www.cnblogs.com/wyaokai/p/10921323.html
+
+#### MVCC
+
+多版本并发控制
+
+https://blog.csdn.net/whoamiyang/article/details/51901888

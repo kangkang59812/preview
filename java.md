@@ -4,6 +4,8 @@
 
 https://www.cnblogs.com/ulysses-you/p/10060463.html
 
+
+
 对象头，对象实际数据，pad(HotSpot VM的自动内存管理系统要求对象起始地址必须是8字节的整数倍)
 
 对象头：（32位系统，4+4； 64位 8+8，开启UseCompressedOops，8+4）
