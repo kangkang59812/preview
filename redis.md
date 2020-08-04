@@ -197,3 +197,62 @@ allkeys-random：当内存不足以容纳新写入数据时，在键空间中，
 volatile-lru：当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，移除最近最少使用的 key（这个一般不太合适）。
 volatile-random：当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，随机移除某个 key。
 volatile-ttl：当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，有更早过期时间的 key 优先移除。
+
+#### 持久化
+
+##### RDB
+```bash
+# 时间策略
+save 900 1 # 900s内如果有1条是写入命令，就触发产生一次快照
+save 300 10
+save 60 10000
+
+# 文件名称
+dbfilename dump.rdb
+
+# 文件保存路径
+dir /home/work/app/redis/data/
+
+# 如果持久化出错，主进程是否停止写入
+stop-writes-on-bgsave-error yes # 当备份进程出错时，主进程就停止接受新的写入操作
+
+# 是否压缩
+rdbcompression yes # Redis本身就属于CPU密集型服务器，再开启压缩会带来更多的CPU消耗，相比硬盘成本，CPU更值钱
+
+# 导入时是否检查
+rdbchecksum yes
+
+# 禁用RDB配置
+save ""
+
+```
+##### AOF
+
+```bash
+# 是否开启aof
+appendonly yes
+
+# 文件名称
+appendfilename "appendonly.aof"
+
+# 同步方式
+# always：把每个写命令都立即同步到aof，很慢，但是很安全
+# everysec：每秒同步一次，是折中方案
+# no：redis不处理交给OS来处理，非常快，但是也最不安全
+appendfsync everysec
+
+# aof重写期间是否同步
+no-appendfsync-on-rewrite no
+
+# 重写触发配置
+auto-aof-rewrite-percentage 100
+auto-aof-rewrite-min-size 64mb
+
+# 加载aof时如果有错如何处理, 如果该配置启用，在加载时发现aof尾部不正确时，会向客户端写入一个log，但是会继续执行，如果设置为 no ，发现错误就会停止，必须修复后才能重新加载
+aof-load-truncated yes
+
+# 文件重写策略
+aof-rewrite-incremental-fsync yes
+```
+启动时会先检查AOF文件是否存在，如果不存在就尝试加载RDB。那么为什么会优先加载AOF呢？因为AOF保存的数据更完整，通过上面的分析我们知道AOF基本上最多损失1s的数据
+RDB持久化与AOF持久化可以同时存在，配合使用

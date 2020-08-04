@@ -240,7 +240,12 @@ SqlSessionFactory build(Configuration config)
 载时，按需加载对象属性(即访问对象中一个懒对象属性，不会加载对象中其他的懒对象属性)。默认为true
 
 <setting name="useGeneratedKeys" value="true"/> 允许JDBC自动生成主键，默认False
-
+这里的useGeneratedKeys只会影响接口上注解的方式（会被注解覆盖）
+不会影响xml方式，xml需要手动写https://www.cnblogs.com/nuccch/p/9069644.html
+<useGeneratedKeys="true" keyColumn="shop_id" keyProperty="shopId">
+会把自动生成的主键写进shopId，Dao层的返回值是影响的行数，不是ID
+  
+  
 延迟加载的意义在于，虽然是关联查询，但不是及时将关联的数据查询出
 来，而且在需要的时候进行查询。
 ```

@@ -30,6 +30,8 @@
    void wait(long timeout) 导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量。 
    void wait(long timeout, int nanos) 导致当前的线程等待，直到其他线程调用此对象的 notify()
 
-7. 
+7. 启动线程的3种方式：继承thread，实现runnable接口（thread传入lambda表达式也行），线程池
+
+8. sleep让出锁资源cpu资源，yield和sleep只让出cpu
 
  
