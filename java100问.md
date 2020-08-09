@@ -34,4 +34,43 @@
 
 8. sleep让出锁资源cpu资源，yield和sleep只让出cpu
 
- 
+9. float型在jvm中使用科学计数法表示的，只占8位，超出位数随机，
+
+   ```java
+   float a1=123456788f;
+   float a2=a1+1;
+   // a1==a2 为True，因为超出了8位
+   ```
+
+10. 类的执行顺序：***静态优先，父类优先，非静态代码块优于构造函数***；父类静态代码块，子类静态代码块，**父类非静态代码块，父类构造函数，子类非静态代码块，子类构造函数**
+
+11. error是系统级别，不可预测；exception是程序级别，要处理；顶层是throwable。
+
+12. equals相等，hashcode相等；equals不相等，hashcode有可能相等；hashcode相等与否，equals都不一定相等
+
+13. main内起一个线程，整个程序一共有3个线程，main，垃圾回收，起的线程
+
+14. 三种同步方式：synchronzied，wait/notify, lock
+
+15. String a1=a2+"aa" 这是调用StringBulider生成一个新的String对象
+
+16. 内存泄漏场景：静态集合类（太大），各种连接，监听器（全局的，使用对象太大），不合理的作用域
+
+17. object.clone()是浅复制，继承Cloneable接口, 引用对象的地址不变；深复制，序列化方式实现的，复制对象，要继承Serializable接口
+
+    ```java
+    public Dancer deepClone() throws IOException, ClassNotFoundException {
+            //序列化，将内存中的对象序列化为字节数组
+      				
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(this);
+    
+            //反序列化，将字节数组转回到对象，同时完成深复制的任务
+            ByteArrayInputStream bis = new 	ByteArrayInputStream(bos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bis);
+            return (Dancer)ois.readObject();
+        }
+    ```
+
+18. 

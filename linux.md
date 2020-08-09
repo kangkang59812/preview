@@ -291,3 +291,11 @@ https://blog.csdn.net/xqhrs232/article/details/52857709
 
 https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/ps.html
 
+#### 进程内存划分
+
+-  Text（代码区）：存放可执行的指令操作，其只读不能写
+-   Bss（静态区or全局区）：存放未初始化的全局变量和静态变量
+-   Data（数据区）：存放初始化的全局变量和静态变量
+-   Stack：存放临时变量，函数参数等
+-   Heap：存放new/malloc等动态申请的变量，用户必须手动进行delete/free操作。 其中Stack和Heap的内存增长方向是相反的
+

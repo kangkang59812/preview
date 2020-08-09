@@ -256,3 +256,8 @@ aof-rewrite-incremental-fsync yes
 ```
 启动时会先检查AOF文件是否存在，如果不存在就尝试加载RDB。那么为什么会优先加载AOF呢？因为AOF保存的数据更完整，通过上面的分析我们知道AOF基本上最多损失1s的数据
 RDB持久化与AOF持久化可以同时存在，配合使用
+
+#### 集群
+
+[codis和cluster](https://www.cnblogs.com/pingyeaa/p/11294773.html)
+
