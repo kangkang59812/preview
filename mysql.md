@@ -434,3 +434,26 @@ b.行的删除版本要么未定义,要么大于当前事务版本号,这可以�
 - redo log是物理日志，记录该数据页更新的内容；binlog是逻辑日志，记录的是这个更新语句的原始逻辑
 - redo log是循环写，日志空间大小固定；binlog是追加写，是指一份写到一定大小的时候会更换下一个文件，不会覆盖。
 - binlog可以作为恢复数据使用，主从复制搭建，redo log作为异常宕机或者介质故障后的数据恢复使用。
+
+#### 练习
+
+![image-20200811005247568](/Users/kangkang/Library/Application Support/typora-user-images/image-20200811005247568.png)
+
+count(*)是分组后的每组数量
+
+having对分组结果二次筛选
+
+where是在group by之前执行的，对原始数据筛选
+
+<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200811005711339.png" alt="image-20200811005711339" style="zoom:50%;" />
+
+<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200811005726442.png" alt="image-20200811005726442" style="zoom:50%;" />
+
+<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200811010022008.png" alt="image-20200811010022008" style="zoom:50%;" />
+
+<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200811010237268.png" alt="image-20200811010237268" style="zoom:50%;" />
+
+<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200811010332514.png" alt="image-20200811010332514" style="zoom:50%;" />
+
+<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200811010507891.png" alt="image-20200811010507891" style="zoom:50%;" />
+

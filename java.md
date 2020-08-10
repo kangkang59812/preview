@@ -346,3 +346,21 @@ put 调用unsafe获得相应segment，然后获取在入锁，重复扫描检测
 
 线程安全的类：Vector,StringBuffer,Properties,
 
+#### Servlet
+
+web.xml配置servlet；继承HttpServlet实现service，init，destory
+
+在第一次访问servlet时实例化对象；单例多线程
+
+##### 生命周期
+
+Tomcat装载xml(不会实例化)，创建(构造函数)，初始化(servlet资源初始化)，提供服务(Service)，destory
+
+#### JDBC
+
+PreparedStatement是预编译的SQL语句，效率高于Statement
+PreparedStatement支持?操作符，相对于Statement更加灵活
+PreparedStatement可以防止SQL注入，安全性高于Statement
+
+ps.setString（1，name）从1开始的
+
