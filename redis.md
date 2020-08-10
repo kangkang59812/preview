@@ -261,3 +261,40 @@ RDB持久化与AOF持久化可以同时存在，配合使用
 
 [codis和cluster](https://www.cnblogs.com/pingyeaa/p/11294773.html)
 
+#### 缓存穿透，雪崩，击穿
+
+缓存穿透是指查询一个一定不存在的数据，由于缓存是不命中时从DB查询，失去缓存意义
+
+解决办法：布隆过滤器，做完hashcode后一定不存在的数据用bitmap拦截；返回空值，并写入缓存设置过期时间  (两者可以结合）
+
+针对key异常多、请求重复率比较低的数据，我们就没有必要进行缓存，使用第二种方案直接过滤掉。
+
+而对于空数据的key有限的，重复率比较高的，我们则可以采用第一种方式进行缓存。
+
+
+缓存雪崩是指在我们设置缓存时采用了相同的过期时间，导致缓存在某一时刻同时失效，请求全部转发到DB，DB瞬时压力过重雪崩（多个key）
+解决办法：事前：redis集群，保证高可用；  事中：本地缓存，限流降级；  事后：持久化
+
+
+缓存击穿是key在某个时间点过期的时候，恰好在这个时间点对这个Key有大量的并发请求过来，这些请求发现缓存过期一般都会从后端DB加载数据并回设到缓存，这个时候大并发的请求可能会瞬间把后端DB压垮（单个）
+
+解决办法：设置互斥锁，
+
+```java
+public String get(key) {
+      String value = redis.get(key);
+      if (value == null) { //代表缓存值过期
+          //设置3min的超时，防止del操作失败的时候，下次缓存过期一直不能load db
+		  if (redis.setnx(key_mutex, 1, 3 * 60) == 1) {  //代表设置成功
+               value = db.get(key);
+                      redis.set(key, value, expire_secs);
+                      redis.del(key_mutex);
+              } else {  //这个时候代表同时候的其他线程已经load db并回设到缓存了，这时候重试获取缓存值即可
+                      sleep(50);
+                      get(key);  //重试
+              }
+          } else {
+              return value;      
+          }
+ }
+```
