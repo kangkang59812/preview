@@ -384,7 +384,9 @@ https://www.cnblogs.com/wyaokai/p/10921323.html
 #### MVCC
 
 多版本并发控制
+
 https://blog.csdn.net/whoamiyang/article/details/51901888
+
 每一行插入两个隐藏列，创建事务id，删除事务id
 
 ##### select
@@ -394,6 +396,9 @@ b.行的删除版本要么未定义,要么大于当前事务版本号,这可以�
 
 ##### update
 执行UPDATE，实际上是新插入了一行记录，并保存其创建时间为当前事务的ID，同时保存当前事务ID到要UPDATE的行的删除时间
+
+##### insert和delete
+前者只有创建事务id，后者在加上删除事务id
 
 =======
 1、主服务器（master）将数据更改的操作记录写到二进制redo日志（binlog）中
