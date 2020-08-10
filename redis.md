@@ -298,3 +298,7 @@ public String get(key) {
           }
  }
 ```
+#### 分布式锁
+
+和上面代码类似，但是如果setnx和设置过期时间不是原子性的，就可能出现死锁
+可以用lua脚本(包含setnx和expire两条指令)
