@@ -4,7 +4,11 @@
 
 https://www.cnblogs.com/ulysses-you/p/10060463.html
 
-![](https://tva1.sinaimg.cn/large/007S8ZIlly1ghmp7tbalzj31h40han6s.jpg)
+
+
+![](https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnauj71q7j31h40haq6d.jpg)
+
+
 
 对象头，对象实际数据，pad(HotSpot VM的自动内存管理系统要求对象起始地址必须是8字节的整数倍)
 
