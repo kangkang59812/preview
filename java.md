@@ -168,9 +168,11 @@ BufferedReader br = new BufferedReader(new InputStreamReader(System.in))
 JVM调优核心为调整年轻代、年老大的内存空间大小及使用GC发生器的类型等
 
 #### Synchronized
+
 https://blog.csdn.net/k_young1997/article/details/106985229
 
 ![](https://tva1.sinaimg.cn/large/007S8ZIlly1ghmvaouxh7j312e0gq7oq.jpg)
+
 
 非公平锁
 
