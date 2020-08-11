@@ -168,8 +168,11 @@ BufferedReader br = new BufferedReader(new InputStreamReader(System.in))
 JVM调优核心为调整年轻代、年老大的内存空间大小及使用GC发生器的类型等
 
 #### Synchronized
+https://blog.csdn.net/k_young1997/article/details/106985229
 
-https://www.jianshu.com/p/7f8a873d479c 非公平锁
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1ghmvaouxh7j312e0gq7oq.jpg)
+
+非公平锁
 
 Synchronized 在线程进入 ContentionList 时，等待的线程会先
 
