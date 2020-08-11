@@ -298,4 +298,9 @@ https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/ps.html
 -   Data（数据区）：存放初始化的全局变量和静态变量
 -   Stack：存放临时变量，函数参数等
 -   Heap：存放new/malloc等动态申请的变量，用户必须手动进行delete/free操作。 其中Stack和Heap的内存增长方向是相反的
-
+#### 线程间通信
+- 将数据放在全局区或者堆
+互斥锁：
+读写锁：读写互斥，写写互斥，读读不互斥
+条件变量：必须和互斥锁一起用
+信号量
