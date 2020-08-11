@@ -94,7 +94,7 @@ select，poll，epoll都是IO多路复用的机制。I/O多路复用就通过一
 
 ##### select
 
-<img src="https://img2018.cnblogs.com/blog/1644918/201907/1644918-20190711210209296-720545504.png" alt="img" style="zoom: 50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnana05w2j30rs0ga0wk.jpg" alt="img" style="zoom: 50%;" />
 
 单个进程就可以同时处理多个网络连接的io请求（同时阻塞多个io操作）。基本原理就是程序呼叫select，然后整个程序就阻塞了，这时候，kernel就会轮询检查所有select负责的fd，当找到一个client中的数据准备好了，select就会返回，这个时候程序就会系统调用，将数据从kernel复制到进程缓冲区。
 
@@ -126,11 +126,11 @@ int epoll_create(int size);创建一个epoll的句柄，size用来告诉内核�
 
 #### 进程和线程
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200619160744923.png" alt="image-20200619160744923" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnandbq0qj30p407443u.jpg" alt="image-20200619160744923" style="zoom:50%;" />
 
 进程只能作为资源拥有的基本单位，这些资源包括内存地址空间，文件描述符等等, 一个进程中的多个线程共享这些资源
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200625111916280.png" alt="image-20200625111916280" style="zoom: 33%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnangh48nj30xm0m4thf.jpg" alt="image-20200625111916280" style="zoom: 33%;" />
 
 线程成为了CPU调度的基本单位
 
@@ -265,7 +265,7 @@ $ tty
 /dev/ttys000
 ```
 
-<img src="https://img2018.cnblogs.com/blog/952033/201909/952033-20190904181756676-1523246503.png" alt="img"  />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnanj3l3gj30a807bglv.jpg" alt="img"  />
 
 ttys000是**仿真终端在文件系统中的表示**，程序通过对这些文件的读写实现对仿真终端的读写
 

@@ -1,6 +1,6 @@
 **Redis是一个开源的内存中的数据结构存储系统，它可以用作：数据库、缓存和消息中间件**。Redis 将数据储存在内存里面，读写数据的时候都不会受到硬盘 I/O 速度的限制，所以速度极快。**采用的是基于内存的采用的是单进程单线程模型的 KV 数据库，由C语言编写，官方提供的数据是可以达到100000+的QPS**（每秒内查询次数）
 
-<img src="https://segmentfault.com/img/bVbk4oT?w=646&amp;h=372" alt="图片描述" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnap3u92jj30hy0acjrs.jpg" alt="图片描述" style="zoom:50%;" />
 
 横轴是连接数，纵轴是QPS
 
@@ -75,13 +75,13 @@ struct RedisObject{
 
 当存储的字符串长度较短时(len<=44 字节),Redis将会采用 **embstr** 编码.embstr 即embedded string 嵌入式的字符串.将SDS结构体嵌入RedisObject对象中, 使用 malloc 方法一次分配内存地址是连续的.
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200605124817940.png" alt="image-20200605124817940" style="zoom:25%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnap6tdz7j30be0h2q4q.jpg" alt="image-20200605124817940" style="zoom:25%;" />
 
 ###### raw编码
 
 当存储的字符串长度较长时(len>44 字节),Redis 将会采用 **raw** 编码,和 **embstr** 最大的区别就是 RedisObject 和 SDS 不在一起了,内存地址不再连续了.
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200605124906501.png" alt="image-20200605124906501" style="zoom:25%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnap9zom7j30h30j7jtq.jpg" alt="image-20200605124906501" style="zoom:25%;" />
 
 ###### 为什么是44字节分界
 
@@ -93,7 +93,7 @@ Redis 默认的内存分配器jemalloc分配内存大小的单位是$2^n$次方,
 
 HashMap存储key,value， value是指向双向链表中key的指针
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200605122133884.png" alt="image-20200605122133884" style="zoom:33%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnapay9mzj30mt0i0dhz.jpg" alt="image-20200605122133884" style="zoom:33%;" />
 
 save(key, value)，首先在 HashMap 找到 Key 对应的节点，如果节点存在，更新节点的值，并把这个节点移动队头。如果不存在，需要构造新的节点，并且尝试把节点塞到队头，如果LRU空间不足，则通过 tail 淘汰掉队尾的节点，同时在 HashMap 中移除 Key
 
@@ -109,9 +109,9 @@ Redis会基于server.maxmemory_samples配置选取固定数目的key，然后比
 
 可以用于消息队列。list 的底层不是简单的 LinkedList，而是 ziplist（压缩列表）或 quicklist（快速列表）
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200605123038897.png" alt="image-20200605123038897" style="zoom:33%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnapff24oj30ti047wfb.jpg" alt="image-20200605123038897" style="zoom:33%;" />
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200605123053166.png" alt="image-20200605123053166" style="zoom:33%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnapd55zyj30rs088gnd.jpg" alt="image-20200605123053166" style="zoom:33%;" />
 
 (以前数据少的时候用压缩的，现在全是quicklist)压缩列表使用一块连续的内存，元素间紧挨着存储没有空隙. 每个元素中包括前一个元素的长度、当前元素的编码和内容. 可能会造成后面的元素雪崩式的更改 prevlen，即 **联级更新**。因此，list 中存储的元素不应该太多、太大
 
@@ -148,7 +148,7 @@ set 是没有排序的字符串集合，不允许出现重复元素，内部结�
 
 zset结构，多级索引
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200605132825918.png" alt="image-20200605132825918" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnapkhbwej30od08wq9j.jpg" alt="image-20200605132825918" style="zoom:50%;" />
 
 
 

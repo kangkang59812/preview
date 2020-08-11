@@ -34,11 +34,11 @@
 
 1. 通过配置文件构建工厂，在通过工厂的getbean方法获得实例，关闭工厂（可自定义工厂）
 
-   ![image-20200609170347881](/Users/kangkang/Library/Application Support/typora-user-images/image-20200609170347881.png)
+   ![image-20200609170347881](https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnaqpqtrnj31e204kq5i.jpg)
 
 2. beand的作用域
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200609170449254.png" alt="image-20200609170449254" style="zoom: 67%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnaqre3ejj30df0530un.jpg" alt="image-20200609170449254" style="zoom: 67%;" />
 
 #### 属性注入
 
@@ -97,15 +97,15 @@ optimize true时强制使用cglib代理
 
 **对目标类所有方法都产生了代理**,**测试是用代理类的bean**
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200609214835156.png" alt="image-20200609214835156" style="zoom:67%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnaqukv9aj31eo0ew7af.jpg" alt="image-20200609214835156" style="zoom:67%;" />
 
 使用带有切点的切面，常用DefaultPointAdvisior
 
-![image-20200609214954053](/Users/kangkang/Library/Application Support/typora-user-images/image-20200609214954053.png)
+![image-20200609214954053](https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnaqvs4ebj310o07d79x.jpg)
 
 常用DefaultPointAdvisior,可**实现任意切点和通知的组合**，在工厂里可添加拦截列表
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200610135709983.png" alt="image-20200610135709983" style="zoom: 33%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnaqxpdthj31hc0piai8.jpg" alt="image-20200610135709983" style="zoom: 33%;" />
 
 ##### 自动代理
 
@@ -113,19 +113,19 @@ optimize true时强制使用cglib代理
 
 **BeanNameAutoProxyCreator**根据bean名称创建代理
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200610141457744.png" alt="image-20200610141457744" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnar34y5xj30q20ciwwd.jpg" alt="image-20200610141457744" style="zoom:50%;" />
 
 **DefaultAdvisorAutoProxyCreator**根据Advisor本身包含信息创建代理
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200610142723793.png" alt="image-20200610142723793" style="zoom: 50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnar2o7jdj30rg0baka7.jpg" alt="image-20200610142723793" style="zoom: 50%;" />
 
 **AnnotationAwareAspectJAutoProxyCreator** 基于Bean中的AspectJ注解自动代理
 
 ##### AspectJ
 
-![image-20200610143235669](/Users/kangkang/Library/Application Support/typora-user-images/image-20200610143235669.png)
+![image-20200610143235669](https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnar7ofqaj30ae00sglq.jpg)
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200610144428923.png" alt="image-20200610144428923" style="zoom: 33%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnar5glvaj30qo0cwn01.jpg" alt="image-20200610144428923" style="zoom: 33%;" />
 
 最上面两个注解都写，或者第二个在xml里注册
 
@@ -137,9 +137,9 @@ optimize true时强制使用cglib代理
 
 单独写切点
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200610145348377.png" alt="image-20200610145348377" style="zoom: 33%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnardogljj3192056t9z.jpg" alt="image-20200610145348377" style="zoom: 33%;" />
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200610145402188.png" alt="image-20200610145402188" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnarfoh71j30ow04k3zv.jpg" alt="image-20200610145402188" style="zoom:50%;" />
 
 mypoint()可以有多个，多个切点可以用||隔开
 
@@ -147,7 +147,7 @@ mypoint()可以有多个，多个切点可以用||隔开
 
 xml方式，多个切点是在execution中||(or)  ！ &&(会报错)
 
-![image-20200610151017507](/Users/kangkang/Library/Application Support/typora-user-images/image-20200610151017507.png)
+![image-20200610151017507](https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnari33kqj31oa07wacu.jpg)
 
 after里也可以写 pointcut
 
@@ -174,21 +174,21 @@ jdbc事务-->spring编程式事务-->sprin声明式事务（aop）
 
 Spring的声明式事务处理是建立在AOP的基础之上的。其本质是对方法前后进行拦截,然后在目标方法开始之前创建或者加入一个事务,在执行完目标方法之后根据执行情况提交或者回滚事务。会产生代理类。不需要改动业务。
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200610170309927.png" alt="image-20200610170309927" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnarmq357j30um07ek7d.jpg" alt="image-20200610170309927" style="zoom:50%;" />
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200610170317429.png" alt="image-20200610170317429" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnarpafbrj30s005s11n.jpg" alt="image-20200610170317429" style="zoom:50%;" />
 
 或者合并
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200610170448793.png" alt="image-20200610170448793" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnartjvlhj313c0ayqts.jpg" alt="image-20200610170448793" style="zoom:50%;" />
 
 基于tx命名空间的声明式事务管理
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200610170645481.png" alt="image-20200610170645481" style="zoom: 50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnarvjyd1j313c0ayqts.jpg" alt="image-20200610170645481" style="zoom: 50%;" />
 
 或者用注解，不需要配置advice和aop，参数比较多
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200610172708061.png" alt="image-20200610172708061" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnarz94kmj30jq0aedvk.jpg" alt="image-20200610172708061" style="zoom:50%;" />
 
 #### 设计模式
 

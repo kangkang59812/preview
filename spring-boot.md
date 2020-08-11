@@ -16,7 +16,7 @@
 
 分布式与云计算集成
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200616150202257.png" alt="image-20200616150202257" style="zoom: 33%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnapy97jmj30xo0im7fe.jpg" alt="image-20200616150202257" style="zoom: 33%;" />
 
 #### 入口类：
 
@@ -32,7 +32,7 @@
 
 .properties或者.yml，同时存在时application.properties的优先级会比application.yml高
 
-<img src="https://img-blog.csdn.net/20180921103443224?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQwNDk1MjE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img" style="zoom: 50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnaqe7fkfj30c80ghjs0.jpg" alt="img" style="zoom: 50%;" />
 
 通过对属性@Value("${mydifination.key1.key2.value}")得到配置文件中的值
 

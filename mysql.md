@@ -249,11 +249,11 @@ https://segmentfault.com/q/1010000004197413
 
 优化器会在索引存在的情况下，通过符合RANGE范围的条数和总数的比例来选择是使用索引还是进行全表遍历
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200712154316840.png" alt="image-20200712154316840" style="zoom: 25%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnao2elp4j30wm0jujux.jpg" alt="image-20200712154316840" style="zoom: 25%;" />
 
 
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200630185155640.png" alt="image-20200630185155640" style="zoom:33%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnao4ys9cj30uq0gg466.jpg" alt="image-20200630185155640" style="zoom:33%;" />
 
 ```mysql
 create table user (
@@ -420,8 +420,6 @@ b.行的删除版本要么未定义,要么大于当前事务版本号,这可以�
 ##### 半同步复制
 
 半同步复制是介于异步复制和完全同步复制之间的一种折中方案。当主服务器执行完一个事务时，只需要有一台从服务器执行完这个事务便可以返回，这样和完全同步复制相比性能就会有一个大大的提升；同时，半同步复制能保证至少有一个从服务器与主服务器中的数据完全一致，即使主服务器宕机，也可以直接将这个从服务器提升为主服务器
->>>>>>> fb7828e1b2c6144b5eabac6f816193ba9d07fad4
-
 #### ACID
 
 原子性，一致性，隔离性，持久性
@@ -437,7 +435,7 @@ b.行的删除版本要么未定义,要么大于当前事务版本号,这可以�
 
 #### 练习
 
-![image-20200811005247568](/Users/kangkang/Library/Application Support/typora-user-images/image-20200811005247568.png)
+![image-20200811005247568](https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnaodzbotj30w009mdnm.jpg)
 
 count(*)是分组后的每组数量
 
@@ -445,15 +443,15 @@ having对分组结果二次筛选
 
 where是在group by之前执行的，对原始数据筛选
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200811005711339.png" alt="image-20200811005711339" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnaou37ulj30vc074gs5.jpg" alt="image-20200811005711339" style="zoom:50%;" />
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200811005726442.png" alt="image-20200811005726442" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnaoextxkj30vg05cdkx.jpg" alt="image-20200811005726442" style="zoom:50%;" />
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200811010022008.png" alt="image-20200811010022008" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnaoqyw0yj30v007sdlf.jpg" alt="image-20200811010022008" style="zoom:50%;" />
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200811010237268.png" alt="image-20200811010237268" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnaojf5vuj30v006e402.jpg" alt="image-20200811010237268" style="zoom:50%;" />
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200811010332514.png" alt="image-20200811010332514" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnaokv6rrj30po05idk1.jpg" alt="image-20200811010332514" style="zoom:50%;" />
 
-<img src="/Users/kangkang/Library/Application Support/typora-user-images/image-20200811010507891.png" alt="image-20200811010507891" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnaonnttoj30uu07iagw.jpg" alt="image-20200811010507891" style="zoom:50%;" />
 

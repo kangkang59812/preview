@@ -1,6 +1,6 @@
 #### 开发流程
 
-![image-20200608202711712](/Users/kangkang/Library/Application Support/typora-user-images/image-20200608202711712.png)
+![image-20200608202711712](https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnanpll12j31fm0u017b.jpg)
 
 ##### 配置mybatis-config.xml文件，严格遵守顺序
 

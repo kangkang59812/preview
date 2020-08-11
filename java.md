@@ -312,7 +312,7 @@ ArrayList**默认扩容1.5倍**（如果指定的容量大于原来1.5倍按指�
 
 默认初始容量是10
 
-![image-20200718170022795](/Users/kangkang/Library/Application Support/typora-user-images/image-20200718170022795.png)
+![image-20200718170022795](https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnamxv5vkj31i00u0gtu.jpg)
 
 Collections.synchronizedCollection(Collection<E> c)
 该方法可以将一个Collection包装为同步（线程安全）的List。但是通过Iterator、Spliterator或Stream遍历这个新List时，需要在外部做好同步
