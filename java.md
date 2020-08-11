@@ -141,7 +141,7 @@ BufferedReader br = new BufferedReader(new InputStreamReader(System.in))
 ##### newFixedThreadPool：
 
 底层：返回ThreadPoolExecutor实例，接收参数为所设定线程数量n Thread，corePoolSize为n Thread，maximumPoolSize为n Thread；keepAliveTime为0L(不限时)；unit为：TimeUnit.MILLISECONDS；WorkQueue为：**new LinkedBlockingQueue() 无界阻塞队列**
-通俗：创建可容纳固定数量线程的池子，每个线程的存活时间是无限的，当池子满了就不在添加线程了；如果池中的所有线程均在繁忙状态，对于新任务会进入阻塞队列中(无界的阻塞队列)maxiumPoolSize也就变成了一个无效的参数，并且运行中的线程池并不会拒绝任务
+通俗：创建可容纳固定数量线程的池子，每个线程的存活时间是无限的，当池子满了就不在添加线程了；如果池中的所有线程均在繁忙状态，对于新任务会进入阻塞队列中(无界的阻塞队列)maxiumPoolSize也就变成了一个无效的参数，并且运行中的线程池并不会拒绝任务。 太多就会OOM
 **适用：执行长期的任务，性能好很多**
 
 ##### newSingleThreadExecutor:
