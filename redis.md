@@ -91,7 +91,7 @@ Redis 默认的内存分配器jemalloc分配内存大小的单位是$2^n$次方,
 
 ##### LRU和基于Redis的实现
 
-HashMap存储key,value， value是指向双向链表中key的指针
+HashMap存储key,value， value是指向双向链表中key的指针  [java实现](https://zhuanlan.zhihu.com/p/34133067)
 
 <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnapay9mzj30mt0i0dhz.jpg" alt="image-20200605122133884" style="zoom:33%;" />
 
