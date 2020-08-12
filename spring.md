@@ -1,6 +1,14 @@
+#### IOC和DI
+
+IOC是一种理念，DI是实现，spring主要用工厂模式和放射来实现
+
+#### Bean实例化方式
+
+类构造器；静态工厂；实例工程
+
 #### 获取bean的方式
 
-1. 通过BeanFactory（在getBean时候创建类实例）或者ApplicationContext（在加载配置文件的时候创建）
+1. 通过BeanFactory（在getBean时候创建类实例）或者ApplicationContext（在加载配置文件的时候创建单例模式的bean）
 2. 注解，在类上写上@Component@Service@Controller@Respository（Dao类）之一，参数填bean名字
 
 #### bean的生命周期
@@ -42,10 +50,11 @@
 
 #### 属性注入
 
-1. 设值注入
-2. 构造注入，需要构造函数\<constructor-arg  name=或者index=0,1..  value=\>
+1. 设值注入（通过setter方法反射注入的）
+2. 构造注入，需要构造函数\<constructor-arg  name=或者index=0,1..  value=\>，存在对象间依赖关系
 3. p命名空间注入，需先引入, p:name=  p:car-ref=
 4. spel  <property name="price" value=# {productInfo.calculatePrice ()}, 可以调用函数注入，中括号里可以填“xiaoming”或者引用对象car（不加引号）
+5. javaConfig，通过Configuration注解， @bean方法return new
 
 
 

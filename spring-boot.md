@@ -51,3 +51,6 @@ spring:
 Jar包可自动加载同目录的application配置文件 
 
 生成target文件夹后，可以将yml，properties都复制过去，会优先读取这些配置文件
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghoggyzo2pj315k0mogyh.jpg" alt="image-20200812234138274" style="zoom: 33%;" />
+

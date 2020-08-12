@@ -484,7 +484,7 @@ set
 
 二**级缓存的作用域是一个mapper的namespace** ，同一个namespace中查询sql可以从缓存中命中
 
-在mapper中开启\<cache/\>,开启二级缓存，类必须序列化
+在mapper中开启\<cache/\>,开启二级缓存，**类必须序列化**
 
 可以再mybatis-config.xml中开启和关闭所有mapper中的缓存
 

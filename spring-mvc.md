@@ -134,6 +134,8 @@ representational state transfer: 资源(text,service等)，资源的表述(传�
 
 特点：统一了客户端访问资源的接口；url更加简洁；有利于不同系统之间的资源共享
 
+@RestController 使类的方法返回的数据直接返回给客户端，而不是一个页面名称；方法上不用再写@ResponseBody
+
 #### 处理put、delete请求
 
 一般来说，资源操有查询，新增，删除，更改四种类型，对应HTTP协议中四类请求：GET，POST，DELETE，PUT。 未声明情况下浏览器默认使用GET提交请求。需要注意的是，普通浏览器只支持GET，POST方式 ，其他请求方式如DELETE|PUT必须通过过滤器的支持才能实现。Spring自带了一个过滤器HiddenHttpMethodFilter，支持GET、POST、PUT、DELETE请求。首先创建一个filter，**然后在前端中写一个隐藏域**
@@ -156,3 +158,6 @@ representational state transfer: 资源(text,service等)，资源的表述(传�
    **postHandle()**：这个方法在当前请求进行处理之后，也就是Controller 方法调用之后执行，但是它会在DispatcherServlet 进行视图返回渲染之前被调用，所以我们可以在这个方法中对Controller 处理之后的ModelAndView 对象进行操作。postHandle 方法被调用的方向跟preHandle 是相反的，也就是说先声明的Interceptor 的postHandle 方法反而会后执行。
 
    **afterCompletion()**：该方法也是需要当前对应的Interceptor 的preHandle 方法的返回值为true 时才会执行。顾名思义，该方法将在整个请求结束之后，也就是在DispatcherServlet 渲染了对应的视图之后执行。这个方法的主要作用是用于进行资源清理工作的。
+
+作用：权限控制，登录拦截，字符集，国际化
+
