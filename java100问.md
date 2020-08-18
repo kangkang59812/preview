@@ -72,7 +72,9 @@
             return (Dancer)ois.readObject();
         }
     ```
-    1. [异常](https://blog.csdn.net/Jin_Kwok/article/details/79866465)， classnotfound : 加载类时找不到的异常，可捕获，class.forname, classloader.loadclass
+18. [异常](https://blog.csdn.net/Jin_Kwok/article/details/79866465)， classnotfound : 加载类时找不到的异常，可捕获，class.forname, classloader.loadclass
 
        noclassdeffounderror：jvm错误，不可捕获，	编译完环境发生变化jar包变化，new对象时找不到类
+       
+19. JDK动态代理的invoke方法的第一个参数是什么：代理类的一个实例
 
