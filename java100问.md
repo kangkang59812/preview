@@ -76,5 +76,10 @@
 
        noclassdeffounderror：jvm错误，不可捕获，	编译完环境发生变化jar包变化，new对象时找不到类
        
-19. JDK动态代理的invoke方法的第一个参数是什么：代理类的一个实例
+19. JDK动态代理的invoke方法的第一个参数是什么：代理类的一个实例。代理后的对象
+      class=class jdkproxy.$Proxy0
+      superClass=class java.lang.reflect.Proxy
+      interfaces: 
+      interface jdkproxy.Hello， 也就是说和原本的Myhello实现了同一个接口
+      invocationHandler=jdkproxy.LogInvocationHandler@a09ee92
 
