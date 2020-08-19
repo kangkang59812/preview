@@ -1,0 +1,89 @@
+```java
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class TurnThread {
+    public static class ThreadA implements Runnable{
+        private static int count;
+        private int num;
+        private static Object object=new Object();
+        public ThreadA(int num) {
+            this.num=num;
+        }
+
+        public void run() {
+            while (true){
+                synchronized (object){
+                    if(count>100){
+                        break;
+                    }else {
+                        if(count%3==num){
+                            System.out.println(num+"--->"+count);
+                            count++;
+                        }else {
+                            try {
+                                object.wait();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    object.notifyAll();
+                }
+            }
+        }
+    }
+
+    public static class ThreadB implements Runnable{
+        private static int count;
+        private int num;
+        //要是静态的锁
+        private static ReentrantLock lock=new ReentrantLock();
+        private static Condition condition=lock.newCondition();
+        public ThreadB(int num) {
+            this.num=num;
+        }
+
+        public void run() {
+            while (true){
+                lock.lock();
+                if(count>100){
+//                    condition.signalAll();
+                    lock.unlock();
+                    break;
+                }else {
+                    if(count%3==num){
+                        System.out.println(num+"--->"+count);
+                        count++;
+                    }else {
+                        try {
+                            condition.await();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                condition.signalAll();
+                lock.unlock();
+
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1=new Thread(new ThreadB(0));
+        t1.start();
+
+        Thread t2=new Thread(new ThreadB(1));
+        t2.start();
+
+        Thread t3=new Thread(new ThreadB(2));
+        t3.start();
+
+        System.out.println("aa");
+
+    }
+}
+
+```
