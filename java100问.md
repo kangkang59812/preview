@@ -32,7 +32,7 @@
 
 7. 启动线程的3种方式：继承thread，实现runnable接口（thread传入lambda表达式也行），线程池
 
-8. sleep让出锁资源cpu资源，yield和sleep只让出cpu
+8. wait让出锁资源cpu资源，yield和sleep只让出cpu
 
 9. float型在jvm中使用科学计数法表示的，只占8位，超出位数随机，
 
