@@ -85,4 +85,14 @@
       interfaces: interface jdkproxy.Hello， 也就是说和原本的Myhello实现了同一个接口
       
       invocationHandler=jdkproxy.LogInvocationHandler@a09ee92
+      
+      cglib代理，不能代理final类型的方法
+      class=class cglib.HelloConcrete$$EnhancerByCGLIB$$e3734e52
+      
+      superClass=class lh.HelloConcrete
+      
+      interfaces: 
+      interface net.sf.cglib.proxy.Factory
+      
+      invocationHandler=not java proxy class
 
