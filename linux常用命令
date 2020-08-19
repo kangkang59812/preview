@@ -1,0 +1,24 @@
+#https://www.runoob.com/linux/linux-command-manual.html
+
+# post方式上传数据
+curl -d "postBody" url
+kill -9 $(ps -ef | grep hnlinux) #方法一 过滤出hnlinux用户进程 
+kill -u hnlinux #方法二
+
+>是覆盖写，>>是追加写
+1是标准输出，2是标准错误，0是标准输入
+2>1中1则代表错误重定向到一个文件1，而不代表标准输出；换成2>&1，&与1结合就代表标准输出了，就变成错误重定向到标准输出.
+>a.text 2>&1 将错误重定向到标准输出,标准输出定向到文件
+
+python a.py & 最后一个&代表后台运行
+
+grep -v string 选择不包含string的行
+
+#执行脚本方式sh, source, exec
+# $./script.sh与$sh script.sh等效, 当前shell是父进程，生成一个子shell进程，在子shell中执行脚本。脚本执行完毕，退出子shell，回到当前shell, 脚本中有目录切换的话回到shell后，shell当前目录不变
+
+# $source script.sh与$. script.sh方式，在当前上下文中执行脚本，不会生成新的进程。脚本执行完毕，回到当前shell，脚本中有目录切换的话回到shell后，shell当前目录会变
+
+# 使用exec command方式，会用command进程替换当前shell进程，并且保持PID不变。执行完毕，直接退出，不回到之前的shell环境
+
+du -h --max-depth=1 /home/lkk 
