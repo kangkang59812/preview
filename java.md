@@ -373,3 +373,16 @@ PreparedStatement可以防止SQL注入，安全性高于Statement
 
 ps.setString（1，name）从1开始的
 
+#### NIO
+Channel有四种：FileChannel，DatagramChannel(udp，不需要建立连接，直接bind)，SocketChannel（客户端tcp），ServerSocketChannel（服务端tcp）
+
+Buffer：常用数据类型的buffer，ByteBuffer，CharBuffer，DoubleBuffer，FloatBuffer，IntBuffer，LongBuffer，ShortBuffer，MappedByteBuffer
+
+Select：可以注册多个Channel，然后调用它的select()方法。这个方法会一直阻塞到某个注册的通道有事件就绪。一旦这个方法返回，线程就可以处理这些事件，事件的例子有如新连接进来，数据接收等
+
+```java
+channel.configureBlocking(false); // 与Selector一起使用时，Channel必须处于非阻塞模式下。这意味着不能将FileChannel与Selector一起使用，因为FileChannel不能切换到非阻塞模式。而套接字通道都可以
+
+SelectionKey key = channel.register(selector, Selectionkey.OP_READ); // ACCEPT CONNECTTREAD WRITE 
+
+```
