@@ -383,6 +383,6 @@ Select：可以注册多个Channel，然后调用它的select()方法。这个�
 ```java
 channel.configureBlocking(false); // 与Selector一起使用时，Channel必须处于非阻塞模式下。这意味着不能将FileChannel与Selector一起使用，因为FileChannel不能切换到非阻塞模式。而套接字通道都可以
 
-SelectionKey key = channel.register(selector, Selectionkey.OP_READ); // ACCEPT CONNECTTREAD WRITE 
+SelectionKey key = channel.register(selector, Selectionkey.OP_READ); // ACCEPT CONNECTTREAD WRITE 可以用|连起来
 
 ```
