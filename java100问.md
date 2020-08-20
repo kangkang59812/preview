@@ -95,4 +95,5 @@
       interface net.sf.cglib.proxy.Factory
       
       invocationHandler=not java proxy class
+20. [buffer.flip()的作用](https://blog.csdn.net/ctwy291314/article/details/82114572?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight)buffer写完数据后要调用，保证读的时候的limit是实际长度
 
