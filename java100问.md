@@ -72,10 +72,11 @@
             return (Dancer)ois.readObject();
         }
     ```
+
 18. [异常](https://blog.csdn.net/Jin_Kwok/article/details/79866465)， classnotfound : 加载类时找不到的异常，可捕获，class.forname, classloader.loadclass
 
        noclassdeffounderror：jvm错误，不可捕获，	编译完环境发生变化jar包变化，new对象时找不到类
-       
+  
 19. JDK动态代理的invoke方法的第一个参数是什么：代理类的一个实例。代理后的对象
 
       class=class jdkproxy.$Proxy0 , finall类型
@@ -87,7 +88,7 @@
       invocationHandler=jdkproxy.LogInvocationHandler@a09ee92
       
       cglib代理，不能代理final类型的方法
-      class=class cglib.HelloConcrete$$EnhancerByCGLIB$$e3734e52
+      class=class cglib.HelloConcrete\$\$EnhancerByCGLIB$$e3734e52
       
       superClass=class lh.HelloConcrete
       
@@ -95,5 +96,70 @@
       interface net.sf.cglib.proxy.Factory
       
       invocationHandler=not java proxy class
-20. [buffer.flip()的作用](https://blog.csdn.net/ctwy291314/article/details/82114572?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight)buffer写完数据后要调用，保证读的时候的limit是实际长度
+      
+20. [buffer.flip()](https://blog.csdn.net/ctwy291314/article/details/82114572?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight)的作用buffer写完数据后要调用，保证读的时候的limit是实际长度
+
+18. [异常](https://blog.csdn.net/Jin_Kwok/article/details/79866465)， classnotfound : 加载类时找不到的异常，可捕获，class.forname, classloader.loadclass
+
+    noclassdeffounderror：jvm错误，不可捕获，	编译完环境发生变化jar包变化，new对象时找不到类
+
+22. [单例模式为什么要用Volatile关键字](https://blog.csdn.net/qq_34412985/article/details/89969004) 双重检查，null  syn null new; volatile禁止指令重排序，防止只用一个未经初始化的对象
+
+    <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyb6n57ymj312i0lm178.jpg" alt="image-20200821121422510" style="zoom:33%;" />
+
+23. 类加载过程: 加载，连接（验证，准备，解析），初始化，使用，卸载
+
+    加载：通过类名获取二进制流，将静态存储结构转化为jvm运行时结构，在堆中生成类对象，作为方法区入口
+
+    验证：.class字节流格式，元数据，字节码，符号引用（可以关闭）
+
+    准备：类变量分配内存，初始化为类型的默认值。如果被final修饰，会被直接初始化为设定的值
+
+    解析：符号引用变为直接引用
+
+    初始化：静态变量真正赋值。只有对类真正使用时才会初始化：调用静态变量、方法，new，创建子类，反射，启动类
+
+24. 类加载器：bootstrap加载JRE_HOME/lib顶层核心类（C语言实现）；Extention ClassLoader加载JRE_HOME/lib/ext下扩展的类；Appclass Loader加载classpath下类；User ClassLoader用户自定义
+
+25. 类的加载方式：jvm加载包含main的方法主类；Class.forName()方法动态加载，会默认执行初始化块（static{}）；Class.forName(name,initialize,loader)中的initialze可指定是否要执行初始化块；ClassLoader.loadClass()方法动态加载，不会执行初始化块（类还没被连接）。 jdbc只能用第一个，因为有静态代码块把自己注册到java.sql.DriverManager
+
+26. 双亲委派：优先父类加载，避免了重复加载，避免自定义加载器加载核心类
+
+27. [自定义类加载器](https://blog.csdn.net/qq_30242987/article/details/88571383)：继承ClassLoader，重写findClass()方法（双亲委派），defineClass(name, classData, 0, classData.length); 类名，字节数据通过文件转为byte数组
+
+    继承ClassLoader,重写loadClass()方法（非双亲委派）
+
+28. GC roots：虚拟机栈（帧栈中的本地变量表）中引用的对象。方法区中静态属性引用的对象。方法区中常量引用的对象。本地方法栈中 JNI 引用的对象
+
+29. 垃圾回收方法：标记清理：直接清理标记为垃圾的对象；标记整理：将标记对象移到内存一段，清空另一端；复制：将存活对象移到另一半内存，清空这一半
+
+30. 分代回收：
+
+    方法区回收：废弃常量没有引用，垃圾回收；无用类（没有实例，classloader收回，类对象没有引用，没有反射访问的）
+
+    堆回收：分代
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyfxdz29ij30yg0u0458.jpg" alt="image-20200821145829242" style="zoom:33%;" />
+
+31. <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyg5uirg0j316q0syx5e.jpg" alt="image-20200821150639442" style="zoom: 33%;" />
+
+32. CMS:  初始标记（会产生全局停顿）标记根可以直接关联到的对象速度快
+
+    ​		   并发标记（和用户线程一起）主要标记过程，标记全部对象
+
+    ​           重新标记 （会产生全局停顿   由于并发标记时，用户线程依然运行，因此在正式清理前，再做修正
+
+    ​           并发清除（和用户线程一起）基于标记结果，直接清理对象
+
+33. [G1](https://www.cnblogs.com/yufengzhang/p/10571081.html)：新生代回收；老年代并发标记（堆使用达到45%）；混合回收
+
+    新生代回收是STOP-The-World
+
+34. [哈希冲突](https://blog.csdn.net/porsche_gt3rs/article/details/79445707)：再哈希，开放地址法(有冲突往后跳)，链地址(hashmap)，公共溢出区
+
+35. hashmap扩容；concurrenthashmap扩容：jdk1.8是，forwardNode实例fwd，在此期间如果其他线程的有读写操作都会判断head节点是否为forwardNode节点，如果是就帮助扩容；对于get读操作，如果当前节点有数据，还没迁移完成，此时不影响读，能够正常进行。 如果当前链表已经迁移完成，那么头节点会被设置成fwd节点，此时get线程会帮助扩容；对于put/remove写操作，如果当前链表已经迁移完成，那么头节点会被设置成fwd节点，此时写线程会帮助扩容，如果扩容没有完成，当前链表的头节点会被锁住，所以写线程会被阻塞，直到扩容完成
+
+36. 线程状态
+
+    <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyhpod777j319t0u04iv.jpg" alt="image-20200821160019272" style="zoom: 50%;" />
 

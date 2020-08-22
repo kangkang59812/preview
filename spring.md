@@ -6,6 +6,10 @@ IOC是一种理念，DI是实现，spring主要用工厂模式和放射来实现
 
 类构造器；静态工厂；实例工程
 
+#### bean的作用域
+
+https://www.cnblogs.com/amunamuna/p/10959796.html
+
 #### 获取bean的方式
 
 1. 通过BeanFactory（在getBean时候创建类实例）或者ApplicationContext（在加载配置文件的时候创建单例模式的bean）
@@ -230,3 +234,8 @@ Spring的声明式事务处理是建立在AOP的基础之上的。其本质是�
 9. 策略模式解决的问题：同一类型业务的类，有很多公用的流程和方法，只是在核心方法上略有区别，为了降低代码的冗余度，单独把不同的方法抽象成一个接口，各自业务类实现自己的核心方法
 
 10. 责任链模式解决的问题：把一套流程拆分成不同的Handler，使用的时候根据业务场景拼装，可以非常灵活和低耦合的实现特定的业务流程。
+
+11. [事务传播行为](https://blog.csdn.net/weixin_39625809/article/details/80707695)
+
+    <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyhhdo1mxj312s0n6gy7.jpg" alt="image-20200821155220848" style="zoom: 50%;" />
+
