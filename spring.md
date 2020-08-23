@@ -13,34 +13,24 @@ https://www.cnblogs.com/amunamuna/p/10959796.html
 #### 获取bean的方式
 
 1. 通过BeanFactory（在getBean时候创建类实例）或者ApplicationContext（在加载配置文件的时候创建单例模式的bean）
-2. 注解，在类上写上@Component@Service@Controller@Respository（Dao类）之一，参数填bean名字
+2. 注解，在类上写上@Component通用型的@Service@Controller@Respository（Dao类）之一，参数填bean名字
 
 #### bean的生命周期
 
-1. **实例化**BeanFactoryPostProcessor实现类（继承它的实例的构造方法）
-2. **执行**BeanFactoryPostProcessor实例的**postProcessBeanFactory**
-3. **实例化**BeanPostProcess实现类
-4. **实例化**InstantiationAwareBeanPostProcessorAdapter实现类
-5. **执行**InstantiationAwareBeanPostProcessorAdapter实例类的**postProcessBeforeInstantiation**方法
-6. 类的构造方法
-7. **执行**InstantiationAwareBeanPostProcessorAdapter实例类**postProcessPropertyValues**
-8. 类的set方法
-9. 继承BeanNameAware实现**setBeanName(String name)**方法，name就是注解或xml里bean的名字
-10. 继承ApplicationContextAware实现**setApplicationContext(ApplicationContext applicationContext)**
-11. BeanPostProcess实例类的**postProcessBeforeInitialization**，在xml里配置后对全体bean有效，不需要指定哪个bean；BeanPostProcessor是在spring容器加载了bean的定义文件并且实例化bean之后执行的。**可以在这里对属性进行更改**
+粗分 
 
-12. 继承 InitializingBean实现**afterPropertiesSet()**   注解方式@PostConstruct
+1. 实例化 Instantiation
+2. 属性赋值 Populate
+3. 初始化 Initialization
+4. 销毁 Destruction
 
-13. 调用bean的init-method属性指定的init方法
+<img src="https://upload-images.jianshu.io/upload_images/4558491-dc3eebbd1d6c65f4.png" alt="img" style="zoom:50%;" />
 
-14. 继承BeanPostProcess实例类的**postProcessAfterInitialization(final Object bean, String s)** bean不可修改了  （--bean已经可以使用了）
-15. **执行**InstantiationAwareBeanPostProcessorAdapter实例类**postProcessAfterInitialization**方法
+postProcessBeforeInstantiation：替换原本的bean，AOP实现的关键
 
-15. 自定义方法
+postProcessAfterInstantiation：可以看到该方法在属性赋值方法内，但是在真正执行赋值操作之前。其返回值为boolean，返回false时可以阻断属性赋值阶段
 
-16. 继承DisposableBean实现spring的destory方法  注解方式@PreDestory
-
-17. 调用bean的destory-method属性指定的destory()方法
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi13vpg1nqj30vi0pyb29.jpg" alt="image-20200823221823468" style="zoom: 50%;" />
 
 #### **获得bean实例**
 
