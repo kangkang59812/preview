@@ -27,8 +27,19 @@ select index选择0-16的数据库，默认0，互相之间不互通
 用作缓存中间件,当我们处于分布式环境下想要操作同一个资源的时候，**我们可以用同一个key然后setnx。谁set成功了，谁就获得该锁，然后可以获取到资源，然后进行操作**
 
 ```c++
+exists book //是否存在
 expire book 60 //设置过期时间,-1永久存储
-setnx //只有当key不存在的时候才能设置成功
+persist book // 命令用于移除给定 key 的过期时间，使得 key 永不过期, ttl结果是-1
+ttl book // 查看剩余时间
+setnx book //只有当key不存在的时候才能设置成功
+config get maxclients //默认连接数最大10000
+keys key* // 正则匹配, 阻塞的
+scan 0 // 非阻塞，慢，会有重复
+zadd set1 score1 value1 // withscores是结果带不带score，zrange/zrevrange按照sore从小到大、从大到小排序
+# A机器
+SUBSCRIBE redisChat  //PSUBSCRIBE后可以接正则
+# B机器 
+PUBLISH redisChat "aaaa" //p
 ```
 
 
@@ -36,6 +47,10 @@ setnx //只有当key不存在的时候才能设置成功
 ##### 基础数据结构
 
 string、list、hash、set 和 zset对应java的string,list,hashmap,set,sortedset
+
+还有hyperloglog用来统计，geo用来处理地理信息， sub/pub订阅模式
+
+布隆过滤器误判率公式$(1-e^{-k*n/m})^{k}$, n和元素被k个哈希函数映射到m位bitmap
 
 ##### 编码
 
@@ -144,9 +159,9 @@ HashMap 扩容是个很耗时的操作,需要去申请新的数组,为了追求�
 
 set 是没有排序的字符串集合，不允许出现重复元素，内部结构与 hash 字典一致，只是 value 为 null
 
-zset结构，多级索引
+zset结构，多级索引。从最上层查，大于当前值就到下一层查
 
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghnapkhbwej30od08wq9j.jpg" alt="image-20200605132825918" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi0xn0n2wcj31hc090abi.jpg" alt="image-20200823184227007" style="zoom:50%;" />
 
 
 
@@ -186,15 +201,20 @@ maxWait ，最大建立连接等待时间。如果超过此时间将接到异常
 - **惰性删除**：当读/写一个已经过期的key时，会触发惰性删除策略，直接删除掉这个过期key（无法保证冷数据被及时删掉）
 - **定期删除**：Redis会定期主动淘汰一批已过期的key（随机抽取一批key检查）
 - **内存淘汰机制**：当前已用内存超过maxmemory限定时，触发主动清理策略
+- **定时**
 
 ##### redis 内存淘汰机制：
 
-noeviction: 当内存不足以容纳新写入数据时，新写入操作会报错。
+noeviction: 当内存不足以容纳新写入数据时，新写入操作会报错。**（默认的）**
 allkeys-lru：当内存不足以容纳新写入数据时，在键空间中，移除最近最少使用的 key（常用）。
 allkeys-random：当内存不足以容纳新写入数据时，在键空间中，随机移除某个 key。
 volatile-lru：当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，移除最近最少使用的 key（这个一般不太合适）。
 volatile-random：当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，随机移除某个 key。
 volatile-ttl：当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，有更早过期时间的 key 优先移除。
+
+幂律分布：用allkeys_lru    平均分布：allkeys_random
+
+redis淘汰数据时还会同步到aof
 
 #### 持久化
 
@@ -249,15 +269,25 @@ auto-aof-rewrite-min-size 64mb
 # 加载aof时如果有错如何处理, 如果该配置启用，在加载时发现aof尾部不正确时，会向客户端写入一个log，但是会继续执行，如果设置为 no ，发现错误就会停止，必须修复后才能重新加载
 aof-load-truncated yes
 
-# 文件重写策略
+# 文件重写策略, 达到64m，重写内存数据
 aof-rewrite-incremental-fsync yes
 ```
 启动时会先检查AOF文件是否存在，如果不存在就尝试加载RDB。那么为什么会优先加载AOF呢？因为AOF保存的数据更完整，通过上面的分析我们知道AOF基本上最多损失1s的数据
 RDB持久化与AOF持久化可以同时存在，配合使用
 
+
+
+fork过程是阻塞的，复制过程不阻塞，fork之后所有数据是read-only
+
+父进程有写入时检测到是readonly触发中断，拷贝异常页的数据，
+
+子进程通过fork操作产生，占用内存大小等同于父进程，理论上需要两倍的内存来完成持久化操作，但Linux有**写时复制机制**（copy-on-write）。父子进程会共享相同的物理内存页，当父进程处理写请求时会把要修改的页创建副本，而子进程在fork操作过程中会共享父进程的内存快照
+
 #### 集群
 
 [codis和cluster](https://www.cnblogs.com/pingyeaa/p/11294773.html)
+
+cluster中共有16384个哈希槽，key-》crc16校验-》槽，每个节点负责一部分
 
 #### 缓存穿透，雪崩，击穿
 
@@ -300,3 +330,81 @@ public String get(key) {
 
 和上面代码类似，但是如果setnx和设置过期时间不是原子性的，就可能出现死锁
 可以用lua脚本(包含setnx和expire两条指令)
+
+setnx后，expire 给锁加一个过期时间防止锁忘记了释放
+
+最佳实践：set=setnx和expire，一条指令，把setnx和expire原子化结合起来。
+
+set key value [ex seconds] [px milliseconds] [nx|xx]
+
+ex seconds： 为键设置秒级过期时间。
+
+px milliseconds： 为键设置毫秒级过期时间。
+
+nx： 键必须不存在， 才可以设置成功， 用于添加。
+
+xx： 与nx相反， 键必须存在， 才可以设置成功， 用于更新
+
+#### 复制
+
+1. 正常连接时，master发送命令流个slave
+2. 断开后又连上，尝试重新获取断开后未同步的数据即部分同步，或者称为部分复制
+3. 第一次连接时或无法部分复制，全量同步
+
+#### 同步
+
+Salve发送sync命令到Master
+
+Master启动一个后台进程，将Redis中的数据快照保存到文件中(**这一步之前即是bgsave**)
+
+启动后台进程的同时Master将保存数据快照期间接收到的写命令(**增量数据**)缓存起来
+
+Master完成写文件操作后，将该文件发送给Salve
+
+Salve将文件保存到磁盘上，然后加载文件到内存恢复数据快照到Salve的Redis上
+
+当Salve完成数据快照的恢复后，Master将这期间收集的写命令发送给Salve进行回放
+
+后续Master收集到的写命令都会通过之前建立的连接，**增量**发送给salve端
+
+#### 哨兵机制
+
+监控主从服务器，故障转移，主从切换
+
+#### Pipeline
+
+原生mget,mset是原子性的, pipeline不是。 [java中jedis调用](https://www.cnblogs.com/a8457013/p/8290429.html)
+
+但是可以封装为事务：一组需要一起执行的命令放到multi和exec两个命令之间，其中multi代表事务开始，exec代表事务结束
+
+#### 密码验证
+
+设置密码：config set requirepass 123456
+
+授权密码：auth 123456
+
+#### 事务
+
+multi, exec, discard, watch, unwatch, **不支持回滚**，如因为 string 自增发生错误，其他正确的，命令会被执行，错误的这条不会。
+
+语法错误都不执行。discard是清除队列的中的命令。exec，discard，unwatch命令都会清除所有监视
+
+#### 内存优化
+
+缩减key value的长度， 共享对象池（整数0-9999），优化存储方式（多用hash）
+
+#### 异步队列
+
+1. 一般使用 list 结构作为队列，rpush 生产消息，lpop 消费消息。当 lpop 没有消息的时候，要适当 sleep 一会再重试。
+
+2. 不用 sleep ？list 指令 blpop，在没有消息的时候，它会阻塞住直到消息到来。
+
+3. 生产一次消费多次？使用 pub/sub 主题订阅者模式，可以实现1:N 的消息队列
+
+   **在消费者下线的情况下，生产的消息会丢失**，得使用专业的消息队列如 RabbitMQ
+
+4. 延时队列：sortedset，拿时间戳作为score，消息内容作为 key 调用 zadd 来生产消息，消费者用 zrangebyscore 指令获取 N 秒之前的数据轮询进行处理 ` zadd set1 score1 value1` value重复的话，score会被覆盖
+
+#### 应用
+
+消息队列，session共享单点登录，计数器排行榜，发布订阅

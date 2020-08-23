@@ -239,3 +239,57 @@ Spring的声明式事务处理是建立在AOP的基础之上的。其本质是�
 
     <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyhhdo1mxj312s0n6gy7.jpg" alt="image-20200821155220848" style="zoom: 50%;" />
 
+    [例](https://www.jb51.net/article/167169.htm)
+
+    ```java
+    @Transactional(propagation = Propagation.REQUIRED)
+    function A(){ // 有事务
+     insert one data
+     functionB(); // 代码正常
+     functionC(); // 代码抛异常
+    }
+    1. C加入A的事务，失败，A中全部回滚
+    2. C失败不影响B的实行结果
+    3. A没事务，会抛出异常
+    4. 仅有B执行成功， A会回滚
+    5. BC都会执行，A不会因为C异常回滚
+    6. A有事务执行BC，则抛出异常
+    7. 事务嵌套运行
+    ```
+
+    
+
+#### 循环依赖
+
+同样对于循环依赖的场景，**构造器注入**和**prototype类型的属性注入**都会初始化Bean**失败**。因为@Service默认是单例的，所以**单例的属性注入是可以成功的**
+
+```java
+/** 一级缓存：用于存放完全初始化好的 bean **/
+private final Map<String, Object> singletonObjects = new ConcurrentHashMap<String, Object>(256);
+
+/** 二级缓存：存放原始的 bean 对象（尚未填充属性），用于解决循环依赖 */
+private final Map<String, Object> earlySingletonObjects = new HashMap<String, Object>(16);
+
+/** 三级级缓存：存放 bean 工厂对象，用于解决循环依赖 */
+private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<String, ObjectFactory<?>>(16);
+
+/**
+bean 的获取过程：先从一级获取，失败再从二级、三级里面获取
+
+创建中状态：是指对象已经 new 出来了但是所有的属性均为 null 等待被 init
+*/
+```
+
+- A 创建过程中需要 B，于是 **A 将自己放到三级缓里面** ，去实例化 B
+
+- B 实例化的时候发现需要 A，于是 B 先查一级缓存，没有，再查二级缓存，还是没有，再查三级缓存，找到了！
+
+- - **然后把三级缓存里面的这个 A 放到二级缓存里面，并删除三级缓存里面的 A**
+  - B 顺利初始化完毕，**将自己放到一级缓存里面**（此时B里面的A依然是创建中状态）
+
+- 然后回来接着创建 A，此时 B 已经创建结束，直接从一级缓存里面拿到 B ，然后完成创建，**并将自己放到一级缓存里面**
+
+- 如此一来便解决了循环依赖的问题
+
+[为什么是三级不是二级](https://my.oschina.net/u/4340310/blog/4332450)  二级不能满足AOP，不然注入的是原始对象，不是代理对象
+

@@ -163,3 +163,5 @@
 
     <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyhpod777j319t0u04iv.jpg" alt="image-20200821160019272" style="zoom: 50%;" />
 
+37. LongAdder和AtomicLong：高并发情况下后者cas失败率高，效率低；后者是把value拆分到多个value存放到cell，分段更新，取值时累加cells。低并发时casbase相当于cas, 高并发时才会走cell
+38. 
