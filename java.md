@@ -147,25 +147,28 @@ BufferedReader br = new BufferedReader(new InputStreamReader(System.in))
 通俗：当有新任务到来，则插入到SynchronousQueue中，由于SynchronousQueue是同步队列，它是一个没有容量的阻塞队列。每个插入操作必须等待另一个线程的对应移除操作。这意味着，如果主线程提交任务的速度高于线程池中处理任务的速度时，CachedThreadPool会不断创建新线程。极端情况下，CachedThreadPool会因为创建过多线程而耗尽CPU资源。**SynchronousQueue是一个不存储元素阻塞队列，每次要进行offer操作时必须等待poll操作，否则不能继续添加元素。**
 
  **适用：执行很多短期异步的小程序或者负载较轻的服务器**
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gi36sli0rdj30qa0gw77d.jpg)
 
 ##### newFixedThreadPool：
 
 底层：返回ThreadPoolExecutor实例，接收参数为所设定线程数量n Thread，corePoolSize为n Thread，maximumPoolSize为n Thread；keepAliveTime为0L(不限时)；unit为：TimeUnit.MILLISECONDS；WorkQueue为：**new LinkedBlockingQueue() 无界阻塞队列**
 通俗：创建可容纳固定数量线程的池子，每个线程的存活时间是无限的，当池子满了就不在添加线程了；如果池中的所有线程均在繁忙状态，对于新任务会进入阻塞队列中(无界的阻塞队列)maxiumPoolSize也就变成了一个无效的参数，并且运行中的线程池并不会拒绝任务。 太多就会OOM
 **适用：执行长期的任务，性能好很多**
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gi36qjgg98j30ra0k077i.jpg)
 
 ##### newSingleThreadExecutor:
 
 底层：FinalizableDelegatedExecutorService包装的ThreadPoolExecutor实例，corePoolSize为1；maximumPoolSize为1；keepAliveTime为0L；unit为：TimeUnit.MILLISECONDS；workQueue为：**new LinkedBlockingQueue() 无界阻塞队列**
 通俗：创建只有一个线程的线程池，且线程的存活时间是无限的；当该线程正繁忙时，对于新任务会进入阻塞队列中(无界的阻塞队列)
 **适用：一个任务一个任务执行的场景**
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gi36sxmhxuj30pm0dqjts.jpg)
 
 ##### NewScheduledThreadPool:
 
 底层：创建ScheduledThreadPoolExecutor实例，corePoolSize为传递来的参数，maximumPoolSize为Integer.MAX_VALUE；keepAliveTime为0；unit为：TimeUnit.NANOSECONDS；workQueue为：new DelayedWorkQueue() 一个按超时时间升序排序的队列
 通俗：创建一个固定大小的线程池，线程池内线程存活时间无限制，线程池可以支持定时及周期性任务执行，如果所有线程均处于繁忙状态，对于新任务会进入DelayedWorkQueue队列中，这是一种按照超时时间排序的队列结构
 **适用：周期性执行任务的场景**
-
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gi36ty7f4vj30si0ik423.jpg)
 
 ##### 为什么要用线程池：
 
