@@ -13,6 +13,7 @@ https://www.cnblogs.com/amunamuna/p/10959796.html
 #### 获取bean的方式
 
 1. 通过BeanFactory（在getBean时候创建类实例）或者ApplicationContext（在加载配置文件的时候创建单例模式的bean）
+   区别：前者不支持AOP，web等功能，是懒汉模式；后者饿汉模式，支持统一资源访问，国际化消息，事件传播
 2. 注解，在类上写上@Component通用型的@Service@Controller@Respository（Dao类）之一，参数填bean名字
 
 #### bean的生命周期
