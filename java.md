@@ -245,6 +245,8 @@ Java 层面的线程与操作系统的原生线程有映射关系，如果要将
 3. 偏向锁：偏斜锁可以降低无竞争开销
 
 乐观锁不一定好：只能保证一个变量的原子操作；长时间CAS消耗cpu；
+[AQS](https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html)
+
 #### 代理
 
 动态代理利用反射机制， java.lang 或 java.lang.reflect
