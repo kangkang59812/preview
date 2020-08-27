@@ -245,7 +245,10 @@ Java 层面的线程与操作系统的原生线程有映射关系，如果要将
 3. 偏向锁：偏斜锁可以降低无竞争开销
 
 乐观锁不一定好：只能保证一个变量的原子操作；长时间CAS消耗cpu；
+
 [AQS](https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html)
+是锁和同步器的框架，ReentrantLock、ReentrantReadWriteLock、Semaphore、CountDownLatch
+1. 互斥锁state累加；互斥+共享，低16位存储互斥锁的状态，高16位存储共享锁的状态，主要用于实现读写锁
 
 #### 代理
 
