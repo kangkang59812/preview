@@ -388,7 +388,6 @@ PreparedStatement可以防止SQL注入，安全性高于Statement
 
 ps.setString（1，name）从1开始的
 
-<<<<<<< Updated upstream
 #### NIO
 Channel有四种：FileChannel，DatagramChannel(udp，不需要建立连接，直接bind)，SocketChannel（客户端tcp），ServerSocketChannel（服务端tcp）
 
@@ -402,9 +401,6 @@ channel.configureBlocking(false); // 与Selector一起使用时，Channel必须�
 SelectionKey key = channel.register(selector, Selectionkey.OP_READ); // ACCEPT CONNECTTREAD WRITE 可以用|连起来
 
 ```
-=======
 #### OOM定位
 
 https://www.cnblogs.com/lujiango/p/9650927.html
-
->>>>>>> Stashed changes

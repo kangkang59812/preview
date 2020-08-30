@@ -162,6 +162,11 @@
 36. 线程状态
 
     <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyhpod777j319t0u04iv.jpg" alt="image-20200821160019272" style="zoom: 50%;" />
+=======
+18. 异常](https://blog.csdn.net/Jin_Kwok/article/details/79866465)， classnotfound : 加载类时找不到的异常，可捕获，class.forname, classloader.loadclass
 
+    noclassdeffounderror：jvm错误，不可捕获，	编译完环境发生变化jar包变化，new对象时找不到类
+
+19. [单例模式为什么要用Volatile关键字](https://blog.csdn.net/qq_34412985/article/details/89969004) 双重检查，null  syn null new; volatile禁止指令重排序，防止只用一个未经初始化的对象
 37. LongAdder和AtomicLong：高并发情况下后者cas失败率高，效率低；后者是把value拆分到多个value存放到cell，分段更新，取值时累加cells。低并发时casbase相当于cas, 高并发时才会走cell
 38. 
