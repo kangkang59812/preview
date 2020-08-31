@@ -121,6 +121,8 @@
 
 24. 类加载器：bootstrap加载JRE_HOME/lib顶层核心类（C语言实现）；Extention ClassLoader加载JRE_HOME/lib/ext下扩展的类；Appclass Loader加载classpath下类；User ClassLoader用户自定义
 
+    类加载器之间不能访问，类对象一般是单例的
+
 25. 类的加载方式：jvm加载包含main的方法主类；Class.forName()方法动态加载，会默认执行初始化块（static{}）；Class.forName(name,initialize,loader)中的initialze可指定是否要执行初始化块；ClassLoader.loadClass()方法动态加载，不会执行初始化块（类还没被连接）。 jdbc只能用第一个，因为有静态代码块把自己注册到java.sql.DriverManager
 
 26. 双亲委派：优先父类加载，避免了重复加载，避免自定义加载器加载核心类
@@ -169,4 +171,8 @@
 
 19. [单例模式为什么要用Volatile关键字](https://blog.csdn.net/qq_34412985/article/details/89969004) 双重检查，null  syn null new; volatile禁止指令重排序，防止只用一个未经初始化的对象
 37. LongAdder和AtomicLong：高并发情况下后者cas失败率高，效率低；后者是把value拆分到多个value存放到cell，分段更新，取值时累加cells。低并发时casbase相当于cas, 高并发时才会走cell
-38. 
+38. 多线程读不一定加锁，主要看业务是否允许读到脏数据。
+39. synchronized方法异常时，如果不catch，锁会被释放，其它线程会争夺此资源
+40. 执行时间短（加锁代码），线程数少，用自旋；执行时间长，线程数多，用系统锁
+41. synchronized不能锁String,Integer等对象，因为jar包里可能引用了相同的对象。导致出错。
+42. 

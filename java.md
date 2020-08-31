@@ -404,3 +404,8 @@ SelectionKey key = channel.register(selector, Selectionkey.OP_READ); // ACCEPT C
 #### OOM定位
 
 https://www.cnblogs.com/lujiango/p/9650927.html
+
+#### lambda
+
+匿名函数不能使用外部的变量，同名时会覆盖外面变量；lambda不会，[出现重载](https://blog.csdn.net/u013066244/article/details/90644711?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param)时可以显示指定函数（fun1）()->{}
+
