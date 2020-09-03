@@ -236,7 +236,11 @@ Java 层面的线程与操作系统的原生线程有映射关系，如果要将
 
 这三种锁使得 JDK 得以优化 Synchronized 的运行，当 **JVM 检测 到不同的竞争状况时，会自动切换到适合的锁实现，这就是锁的升级、 降级**
 
+优化：锁细化，对象落锁要加final防止被指向别的对象导致锁释放
 
+#### CAS
+
+调用unsafe的compareAndset(V,E,NEW),底层是cpu的cmpxchg指令，通过lock内存地址实现。ABA问题，基础数据类型没问题，引用类型有问题，引用的对象改变了其他对象，再指回来。
 
 #### 锁
 
@@ -408,4 +412,22 @@ https://www.cnblogs.com/lujiango/p/9650927.html
 #### lambda
 
 匿名函数不能使用外部的变量，同名时会覆盖外面变量；lambda不会，[出现重载](https://blog.csdn.net/u013066244/article/details/90644711?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param)时可以显示指定函数（fun1）()->{}
+
+#### Unsafe
+
+构造函数是private，只能调用getUnsafe方法返回单例。
+
+compareAndSwapObject, 新版本是weakcompareAndSet
+
+可以直接allocate memory
+
+可以不通过new创建对象：分配内存空间，返回引用，内部的变量都是其默认值。可以直接获取属性的地址相对于对象地址的偏移量，从而直接越过访问权修改数据。
+
+#### 引用
+
+强引用，不会垃圾回收；软引用，内存不足回收；弱引用，垃圾清除直接回收；
+
+若果既有强又有软或弱引用，不会回收
+
+虚引用，任何时候都可能被垃圾回收器回收
 

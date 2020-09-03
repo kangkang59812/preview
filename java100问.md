@@ -171,8 +171,50 @@
 
 19. [单例模式为什么要用Volatile关键字](https://blog.csdn.net/qq_34412985/article/details/89969004) 双重检查，null  syn null new; volatile禁止指令重排序，防止只用一个未经初始化的对象
 37. LongAdder和AtomicLong：高并发情况下后者cas失败率高，效率低；后者是把value拆分到多个value存放到cell，分段更新，取值时累加cells。低并发时casbase相当于cas, 高并发时才会走cell
+
 38. 多线程读不一定加锁，主要看业务是否允许读到脏数据。
+
 39. synchronized方法异常时，如果不catch，锁会被释放，其它线程会争夺此资源
+
 40. 执行时间短（加锁代码），线程数少，用自旋；执行时间长，线程数多，用系统锁
-41. synchronized不能锁String,Integer等对象，因为jar包里可能引用了相同的对象。导致出错。
-42. 
+
+41. synchronized不能锁String,Integer等对象，因为jar包里可能引用了相同的对象。导致出错。也不能锁null，会报空指针异常。
+
+42. [eden的大对象什么时候进入old区](https://www.jianshu.com/p/f7cde625d849)：- XX:PretenureSizeThreshold，默认0，不管多大现在eden中分配
+
+43. volatile保证线程可见性，禁止指令重排序。每个线程都有变量的副本，如果变量在线程a中修改了，那么线程b读写的还是自己的副本，无法控制线程什么时候去读变量本身。**在线程a中加sleep后，可重新从原变量取值**。
+
+    保证线程可见性：靠cpu的缓存一致性协议，MESI
+
+    JMM模型里有8个指令完成读写操作，通过其中load和store指令相互组合成的4个内存屏障实现禁止指令重排序。
+
+44. 使用tryLock进行尝试锁定，**不管锁定与否，方法都将继续执**行；可以根据**tryLock的返回值来判定是否锁定**。
+
+45. lockInterruptibly可在别的线程中调用当前线程的interrupt()方法打断当前线程的等待，进入到当前线程的catch中去
+
+46. [cyclicbarrier](https://www.jianshu.com/p/333fd8faa56e)所有线程达到await()时才会继续执行，可复用。第一个参数是线程数n，第二个是最后一个线程到达后要做的任务。参与的线程数要是小于参数设置的，会一直阻塞；大于会 对n取余的线程数会阻塞，n的整数倍线程数会通过 。场景：合并计算结果。
+
+    phaser是多级栅栏
+
+47. 读写锁：readWriteLock.readLock() readWriteLock.writeLock()。写锁是排它锁，读锁是共享锁。一个线程读，其他线程也可以读。
+
+48. new Semaphore(2, true)可以设置是否为公平锁。acquire时获取不到是阻塞的。可以用来限流。
+
+49. ```
+    static Exchanger<String> exchanger = new Exchanger<>();
+    不同线程调用s = exchanger.exchange(s);会阻塞
+    是两个线程间通信的方式之一，当线程都把值放进exchanger后，才会唤醒
+    游戏中交易装备
+    ```
+
+50. try-catch-finally
+
+    如果try中没有异常，则顺序为try→finally，
+
+    如果try中有异常，则顺序为try→catch→finally
+
+    try中有return，无异常时，会执行完finally后再return，返回的是try中保存的信息（引用类型会被finally中代码改变）
+
+    catch中带有return，同理
+
+    finally中有return时（不建议写），try和catch中的return会失效

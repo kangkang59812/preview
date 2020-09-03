@@ -309,3 +309,7 @@ https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/ps.html
 1. fork，父子进程资源独立，有COW，降低开销，不需要手动exit()
 2. vfork，父子共享空间，父进程为阻塞直到子进程exit()，多用在执行另一个程序
 3. 而clone() 是则可以将父进程资源有选择地复制给子进程，而没有复制的数据结构则通过指针的复制让子进程共享。可选择是否让父进程挂起
+
+#### 无锁化
+
+[双buffer](https://blog.csdn.net/ingnight/article/details/107296427)，有一分备份变量，写是写入备份，然后主变量和备份变量交换指针。
